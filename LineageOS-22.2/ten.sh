@@ -195,7 +195,7 @@ endif' "$version_mk"
 # --------------------------------------------------
 # Base: Vanadium (GrapheneOS)
 # Fork: https://github.com/jqssun/android-titanium-browser
-# Versão: v152.0.7977.42
+# Versão: v152.0.7977.64
 # Licença: GPL-2.0
 # --------------------------------------------------
 # Baixa APK e gera Android.bp para importação prebuilt
