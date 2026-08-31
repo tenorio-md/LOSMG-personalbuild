@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #-------------------------------------------------------------------#
-# Autor       : WhoFoss <https://github.com/WhoFoss>
+# Autor       : WhoFoss <https://github.com/WhoFoss> e forkado por Tenório <https://github.com/tenorio-md>
 # DESCRIÇÃO   :
 # Script de build automatizado para compilar o LineageOS 22.2 com MicroG
 # integrado, voltado para o Xiaomi Redmi Note 13 4G (codename: sapphire,
@@ -205,7 +205,7 @@ install_titanium() {
     echo -e "${CYAN}Cloning Titanium Browser prebuilt...${RESET}"
     mkdir -p device/xiaomi/sapphire/prebuilt/titanium
     wget -q --show-progress -O device/xiaomi/sapphire/prebuilt/titanium/Titanium.apk \
-        "https://github.com/jqssun/android-titanium-browser/releases/download/v152.0.7977.42/152.0.7977.42-1786928933-arm64-v8a.apk" \
+        "https://github.com/jqssun/android-titanium-browser/releases/download/v152.0.7977.64/152.0.7977.64-1787754104-arm64-v8a.apk" \
         || { echo "[ERRO] Falha ao baixar Titanium.apk"; return 1; }
 
     cat > device/xiaomi/sapphire/prebuilt/titanium/Android.bp << 'EOF'
@@ -225,31 +225,27 @@ EOF
     add_to_device_mk "Titanium"
 }
 
-install_davx5() 
-{
-    echo -e "${YELLOW}Baixando DAVx5 (v4.5.19-ose)...${RESET}"
+# Baixa o APK do Obtainium e gera o Android.bp para importação prebuilt.
+install_obtainium() {
+    echo -e "${CYAN}Cloning Obtainium prebuilt...${RESET}"
+    mkdir -p device/xiaomi/sapphire/prebuilt/obtainium
+    wget -q --show-progress -O device/xiaomi/sapphire/prebuilt/obtainium/Obtainium.apk \
+        "https://github.com/ImranR98/Obtainium/releases/download/v1.6.14/app-arm64-v8a-release.apk" \
+        || { echo "[ERRO] Falha ao baixar Obtainium.apk"; return 1; }
 
-    local target_dir="device/xiaomi/sapphire/prebuilt/davx5"
-    mkdir -p "$target_dir"
-
-    wget -q --show-progress -O "$target_dir/DAVx5.apk" \
-        "https://f-droid.org/repo/at.bitfire.davdroid_405190003.apk" \
-        || { echo "[ERRO] Falha ao baixar DAVx5.apk"; return 1; }
-
-    cat > "$target_dir/Android.bp" << 'EOF'
+    cat > device/xiaomi/sapphire/prebuilt/obtainium/Android.bp << 'EOF'
 android_app_import {
-    name: "DAVx5",
-    apk: "DAVx5.apk",
+    name: "Obtainium",
+    apk: "Obtainium.apk",
     presigned: true,
     preprocessed: true,
-    product_specific: true,
     dex_preopt: {
         enabled: false,
     },
 }
 EOF
-    print_header "DAVx5 prebuilt baixado para $target_dir"
-    add_to_device_mk "DAVx5"
+    print_header "Obtainium prebuilt cloned to device/xiaomi/sapphire/prebuilt/obtainium"
+    add_to_device_mk "Obtainium"
 }
 
 # Baixa o APK do Thunderbird e gera o Android.bp para importação prebuilt.
@@ -258,7 +254,7 @@ install_thunderbird()
     echo -e "${YELLOW}Cloning Thunderbird prebuilt...${RESET}"
     mkdir -p device/xiaomi/sapphire/prebuilt/thunderbird
     wget -q --show-progress -O device/xiaomi/sapphire/prebuilt/thunderbird/Thunderbird.apk \
-        "https://f-droid.org/repo/net.thunderbird.android_23.apk" \
+        "https://f-droid.org/repo/net.thunderbird.android_30.apk" \
         || { echo "[ERRO] Falha ao baixar Thunderbird.apk"; return 1; }
 
     cat > device/xiaomi/sapphire/prebuilt/thunderbird/Android.bp << 'EOF'
@@ -516,9 +512,10 @@ clear
 patch_signature_spoofing
 patch_version_mk; clear
 install_titanium
-# install_thunderbird
+install_obtainium
+install_thunderbird
 install_aurorastore
-install_davx5
+install_auxio
 gofile_install; clear
 
 
@@ -528,7 +525,7 @@ gofile_install; clear
 echo -e "${RED}Setting up build environment...${RESET}"
 source build/envsetup.sh
 export BUILD_USERNAME=LineageOS-22.2-MicroG
-export BUILD_HOSTNAME=WhoFoss
+export BUILD_HOSTNAME=Tenório
 export SKIP_ABI_CHECKS=true
 export WITH_GMS=true
 mkdir -p out/target/product/sapphire/obj/KERNEL_OBJ/usr
