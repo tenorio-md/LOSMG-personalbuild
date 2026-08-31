@@ -284,7 +284,7 @@ install_aurorastore()
 
     rm -rf vendor/aurora && mkdir -p vendor/aurora
 
-    local BASE_URL="https://raw.githubusercontent.com/WhoFoss/LOSMG/refs/heads/main/AuroraStore"
+    local BASE_URL="https://raw.githubusercontent.com/tenorio-md/LOSMG-personalbuild/refs/heads/main/AuroraStore"
     local files=("Android.mk" "CleanSpec.mk" "aurorasetup.sh")
     local f
 
@@ -416,7 +416,7 @@ echo -e "${YELLOW}Baixando MicroG Manifest...${RESET}"
 mkdir -p .repo/local_manifests
 
 TMP_FILE=$(mktemp)
-REMOTE_URL="https://raw.githubusercontent.com/WhoFoss/LOSMG/refs/heads/main/MG-MANIFEST/microg.xml"
+REMOTE_URL="https://raw.githubusercontent.com/tenorio-md/LOSMG-personalbuild/refs/heads/main/MG-MANIFEST/microg.xml"
 
 if ! curl -fsSL -o "$TMP_FILE" "$REMOTE_URL"; then
     rm -f "$TMP_FILE"
@@ -475,7 +475,7 @@ rgapps()
 {
 clear
     local MK_FILE="device/xiaomi/sapphire/lineage_sapphire.mk"
-    local REMOTE_URL="https://raw.githubusercontent.com/WhoFoss/LOSMG/refs/heads/main/sapphire.mk/lineage_sapphire.mk"
+    local REMOTE_URL="https://raw.githubusercontent.com/tenorio-md/LOSMG-personalbuild/refs/heads/main/sapphire.mk/lineage_sapphire.mk"
     local TMP_FILE
 
     if [ ! -f "$MK_FILE" ]; then
@@ -609,4 +609,4 @@ upload(){
     fi
 
     [ -n "$ROM_URL" ] && return 0 || return 1
-}
+}; upload
