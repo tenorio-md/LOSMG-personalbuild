@@ -438,7 +438,7 @@ print_header "MG manifest baixado" && clear
 # Download and synchronize the complete source tree
 # ========================================
 echo -e "${YELLOW}Syncing full repo...${RESET}"
-repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags --optimized-fetch --prune || error_exit "Repo sync failed"
+repo sync -c -j4 --force-sync --no-clone-bundle --no-tags --optimized-fetch --prune || error_exit "Repo sync failed"
 print_header "Repo sync success"
 
 # ========================================
