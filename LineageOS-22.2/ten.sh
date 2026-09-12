@@ -205,7 +205,7 @@ install_titanium() {
     echo -e "${CYAN}Cloning Titanium Browser prebuilt...${RESET}"
     mkdir -p device/xiaomi/sapphire/prebuilt/titanium
     wget -q --show-progress -O device/xiaomi/sapphire/prebuilt/titanium/Titanium.apk \
-        "https://github.com/jqssun/android-titanium-browser/releases/download/v152.0.7977.64/152.0.7977.64-1787754104-arm64-v8a.apk" \
+        "https://github.com/jqssun/android-titanium-browser/releases/download/v153.0.8010.36/153.0.8010.36-1788945191-arm64-v8a.apk" \
         || { echo "[ERRO] Falha ao baixar Titanium.apk"; return 1; }
 
     cat > device/xiaomi/sapphire/prebuilt/titanium/Android.bp << 'EOF'
@@ -230,7 +230,7 @@ install_obtainium() {
     echo -e "${CYAN}Cloning Obtainium prebuilt...${RESET}"
     mkdir -p device/xiaomi/sapphire/prebuilt/obtainium
     wget -q --show-progress -O device/xiaomi/sapphire/prebuilt/obtainium/Obtainium.apk \
-        "https://github.com/ImranR98/Obtainium/releases/download/v1.6.14/app-arm64-v8a-release.apk" \
+        "https://f-droid.org/repo/dev.imranr.obtainium.fdroid_23543.apk" \
         || { echo "[ERRO] Falha ao baixar Obtainium.apk"; return 1; }
 
     cat > device/xiaomi/sapphire/prebuilt/obtainium/Android.bp << 'EOF'
@@ -249,8 +249,7 @@ EOF
 }
 
 # Baixa o APK do Thunderbird e gera o Android.bp para importação prebuilt.
-install_thunderbird() 
-{
+install_thunderbird() {
     echo -e "${YELLOW}Cloning Thunderbird prebuilt...${RESET}"
     mkdir -p device/xiaomi/sapphire/prebuilt/thunderbird
     wget -q --show-progress -O device/xiaomi/sapphire/prebuilt/thunderbird/Thunderbird.apk \
@@ -305,47 +304,31 @@ install_aurorastore()
     add_to_device_mk "AuroraStore"
 }
 
-# ============================================================
-# Auxio Music Player
-# ============================================================
-# Descricao: Baixa e integra o player de musica Auxio como
-# aplicativo prebuilt no build do Android para o Xiaomi Sapphire
-#
-# Caracteristicas:
-#   - Player minimalista e open-source (F-Droid)
-#   - Interface moderna baseada em Material You
-#   - Suporte a tags e albuns com alta performance
-#   - Sem dependencias do Google Services
-#
-# Site oficial: https://auxio.app/
-# Fonte: https://f-droid.org/packages/org.oxycblt.auxio/
-# ============================================================
+# Baixa o APK do Gramophone e gera o Android.bp para importação prebuilt.
+install_gramophone() {
+    echo -e "${CYAN}Cloning Gramophone prebuilt...${RESET}"
+    mkdir -p device/xiaomi/sapphire/prebuilt/gramophone
 
-install_auxio() 
-{
-    mkdir -p device/xiaomi/sapphire/prebuilt/auxio
-    
-    wget -q --show-progress -O device/xiaomi/sapphire/prebuilt/auxio/Auxio.apk \
-        "https://f-droid.org/repo/org.oxycblt.auxio_75.apk" \
-        || { echo -e "${RED}[ERRO] Falha ao baixar Auxio.apk${RESET}"; return 1; }
-    
-    cat > device/xiaomi/sapphire/prebuilt/auxio/Android.bp << 'EOF'
+    wget -q --show-progress -O device/xiaomi/sapphire/prebuilt/gramophone/Gramophone.apk \
+        "https://f-droid.org/repo/org.akanework.gramophone_10002.apk" \
+        || { echo "[ERRO] Falha ao baixar Gramophone.apk"; return 1; }
+
+    cat > device/xiaomi/sapphire/prebuilt/gramophone/Android.bp << 'EOF'
 android_app_import {
-    name: "Auxio",
-    apk: "Auxio.apk",
+    name: "Gramophone",
+    apk: "Gramophone.apk",
     presigned: true,
     preprocessed: true,
     product_specific: true,
     dex_preopt: {
         enabled: false,
     },
-    overrides: ["Twelve", "Music", "Eleven"],
+    overrides: ["Twelve"],
 }
 EOF
-    
-    add_to_device_mk "Auxio"
-    
-    echo -e "${GREEN}Auxio instalado com sucesso em device/xiaomi/sapphire/prebuilt/auxio/${RESET}"
+
+    print_header "Gramophone prebuilt cloned to device/xiaomi/sapphire/prebuilt/gramophone"
+    add_to_device_mk "Gramophone"
 }
 
 #####################################
@@ -515,7 +498,7 @@ install_titanium
 install_obtainium
 install_thunderbird
 install_aurorastore
-install_auxio
+install_gramophone
 gofile_install; clear
 
 
