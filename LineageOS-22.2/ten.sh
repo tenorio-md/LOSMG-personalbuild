@@ -304,32 +304,8 @@ install_aurorastore()
     add_to_device_mk "AuroraStore"
 }
 
-# Baixa o APK do Gramophone e gera o Android.bp para importação prebuilt.
-install_gramophone() {
-    echo -e "${CYAN}Cloning Gramophone prebuilt...${RESET}"
-    mkdir -p device/xiaomi/sapphire/prebuilt/gramophone
+# Baixa o APK do ??? e gera o Android.bp para importação prebuilt.
 
-    wget -q --show-progress -O device/xiaomi/sapphire/prebuilt/gramophone/Gramophone.apk \
-        "https://f-droid.org/repo/org.akanework.gramophone_10002.apk" \
-        || { echo "[ERRO] Falha ao baixar Gramophone.apk"; return 1; }
-
-    cat > device/xiaomi/sapphire/prebuilt/gramophone/Android.bp << 'EOF'
-android_app_import {
-    name: "Gramophone",
-    apk: "Gramophone.apk",
-    presigned: true,
-    preprocessed: true,
-    product_specific: true,
-    dex_preopt: {
-        enabled: false,
-    },
-    overrides: ["Twelve"],
-}
-EOF
-
-    print_header "Gramophone prebuilt cloned to device/xiaomi/sapphire/prebuilt/gramophone"
-    add_to_device_mk "Gramophone"
-}
 
 #####################################
 #----------------------------------#
@@ -498,7 +474,6 @@ install_titanium
 install_obtainium
 install_thunderbird
 install_aurorastore
-install_gramophone
 gofile_install; clear
 
 
