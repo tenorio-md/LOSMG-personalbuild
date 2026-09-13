@@ -230,7 +230,7 @@ install_obtainium() {
     echo -e "${CYAN}Cloning Obtainium prebuilt...${RESET}"
     mkdir -p device/xiaomi/sapphire/prebuilt/obtainium
     wget -q --show-progress -O device/xiaomi/sapphire/prebuilt/obtainium/Obtainium.apk \
-        "https://f-droid.org/repo/dev.imranr.obtainium.fdroid_23543.apk" \
+        "https://github.com/ImranR98/Obtainium/releases/download/v1.6.17/app-arm64-v8a-release.apk" \
         || { echo "[ERRO] Falha ao baixar Obtainium.apk"; return 1; }
 
     cat > device/xiaomi/sapphire/prebuilt/obtainium/Android.bp << 'EOF'
@@ -304,8 +304,30 @@ install_aurorastore()
     add_to_device_mk "AuroraStore"
 }
 
-# Baixa o APK do ??? e gera o Android.bp para importação prebuilt.
+# Baixa o APK do Auxio e gera o Android.bp para importação prebuilt.
+install_auxio() {
+    echo -e "${CYAN}Cloning Auxio Browser prebuilt...${RESET}"
+    mkdir -p device/xiaomi/sapphire/prebuilt/auxio
+    wget -q --show-progress -O device/xiaomi/sapphire/prebuilt/auxio/Auxio.apk \
+        "https://f-droid.org/repo/org.oxycblt.auxio_75.apk" \
+        || { echo "[ERRO] Falha ao baixar Auxio.apk"; return 1; }
 
+    cat > device/xiaomi/sapphire/prebuilt/auxio/Android.bp << 'EOF'
+android_app_import {
+    name: "Auxio",
+    apk: "Auxio.apk",
+    presigned: true,
+    preprocessed: true,
+    product_specific: true,
+    dex_preopt: {
+        enabled: false,
+    },
+    overrides: ["Twelve"]
+}
+EOF
+    print_header "Auxio Browser prebuilt cloned to device/xiaomi/sapphire/prebuilt/auxio"
+    add_to_device_mk "Auxio"
+}
 
 #####################################
 #----------------------------------#
@@ -474,6 +496,7 @@ install_titanium
 install_obtainium
 install_thunderbird
 install_aurorastore
+install_auxio
 gofile_install; clear
 
 
