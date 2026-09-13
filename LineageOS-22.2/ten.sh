@@ -513,7 +513,7 @@ clear
 
 #####################################
 #----------------------------------#
-# Coisas que voce não precisa saber
+# Apps que serão integrados ao sistema operacional
 #----------------------------------#
 patch_signature_spoofing
 patch_version_mk; clear
