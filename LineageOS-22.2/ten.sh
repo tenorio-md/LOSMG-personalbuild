@@ -306,7 +306,7 @@ install_aurorastore()
 
 # Baixa o APK do Auxio e gera o Android.bp para importação prebuilt.
 install_auxio() {
-    echo -e "${CYAN}Cloning Auxio Browser prebuilt...${RESET}"
+    echo -e "${CYAN}Cloning Auxio prebuilt...${RESET}"
     mkdir -p device/xiaomi/sapphire/prebuilt/auxio
     wget -q --show-progress -O device/xiaomi/sapphire/prebuilt/auxio/Auxio.apk \
         "https://f-droid.org/repo/org.oxycblt.auxio_75.apk" \
@@ -325,8 +325,33 @@ android_app_import {
     overrides: ["Twelve"]
 }
 EOF
-    print_header "Auxio Browser prebuilt cloned to device/xiaomi/sapphire/prebuilt/auxio"
+    print_header "Auxio prebuilt cloned to device/xiaomi/sapphire/prebuilt/auxio"
     add_to_device_mk "Auxio"
+}
+
+# Baixa o APK do Fossify Calendar e gera o Android.bp para importação prebuilt.
+install_fossifycalendar() {
+    echo -e "${CYAN}Cloning Fossify Calendar prebuilt...${RESET}"
+    mkdir -p device/xiaomi/sapphire/prebuilt/fossifycalendar
+    wget -q --show-progress -O device/xiaomi/sapphire/prebuilt/fossifycalendar/FossifyCalendar.apk \
+        "https://f-droid.org/repo/org.fossify.calendar_20.apk" \
+        || { echo "[ERRO] Falha ao baixar FossifyCalendar.apk"; return 1; }
+
+    cat > device/xiaomi/sapphire/prebuilt/fossifycalendar/Android.bp << 'EOF'
+android_app_import {
+    name: "FossifyCalendar",
+    apk: "FossifyCalendar.apk",
+    presigned: true,
+    preprocessed: true,
+    product_specific: true,
+    dex_preopt: {
+        enabled: false,
+    },
+    overrides: ["Etar"]
+}
+EOF
+    print_header "Fossify Calendar prebuilt cloned to device/xiaomi/sapphire/prebuilt/fossifycalendar"
+    add_to_device_mk "FossifyCalendar"
 }
 
 #####################################
@@ -497,6 +522,7 @@ install_obtainium
 install_thunderbird
 install_aurorastore
 install_auxio
+install_fossifycalendar
 gofile_install; clear
 
 
