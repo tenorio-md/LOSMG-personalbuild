@@ -205,7 +205,7 @@ install_titanium() {
     echo -e "${CYAN}Cloning Titanium Browser prebuilt...${RESET}"
     mkdir -p device/xiaomi/sapphire/prebuilt/titanium
     wget -q --show-progress -O device/xiaomi/sapphire/prebuilt/titanium/Titanium.apk \
-        "https://github.com/jqssun/android-titanium-browser/releases/download/v153.0.8010.36/153.0.8010.36-1788945191-arm64-v8a.apk" \
+        "https://github.com/jqssun/android-titanium-browser/releases/download/v153.0.8010.47/153.0.8010.47-1789750245-arm64-v8a.apk" \
         || { echo "[ERRO] Falha ao baixar Titanium.apk"; return 1; }
 
     cat > device/xiaomi/sapphire/prebuilt/titanium/Android.bp << 'EOF'
@@ -253,7 +253,7 @@ install_thunderbird() {
     echo -e "${YELLOW}Cloning Thunderbird prebuilt...${RESET}"
     mkdir -p device/xiaomi/sapphire/prebuilt/thunderbird
     wget -q --show-progress -O device/xiaomi/sapphire/prebuilt/thunderbird/Thunderbird.apk \
-        "https://f-droid.org/repo/net.thunderbird.android_31.apk" \
+        "https://f-droid.org/repo/net.thunderbird.android_30.apk" \
         || { echo "[ERRO] Falha ao baixar Thunderbird.apk"; return 1; }
 
     cat > device/xiaomi/sapphire/prebuilt/thunderbird/Android.bp << 'EOF'
